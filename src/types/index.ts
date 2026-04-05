@@ -1,4 +1,4 @@
-export type PropertyStatus = "Available" | "Pending" | "Sold";
+export type PropertyStatus = "Available" | "Pending" | "Sold" | "Rented";
 
 export interface Property {
   id: string;
@@ -20,6 +20,7 @@ export interface Property {
     lng: number;
   };
   imageUrl: string;
+  views?: number;
   addedAt: string;
 }
 

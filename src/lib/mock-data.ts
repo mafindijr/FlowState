@@ -2,7 +2,7 @@ import { Property, Lead } from "../types";
 
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
-export const mockProperties: Property[] = [
+export let mockProperties: Property[] = [
   {
     id: "prop-1",
     slug: "modern-oceanfront-villa",
@@ -102,7 +102,7 @@ export const mockProperties: Property[] = [
     title: "Co-living Shared House",
     address: "42 Commute Ave, Seattle, WA",
     price: 900,
-    status: "Available",
+    status: "Rented",
     category: "Residential",
     listingType: "Rent",
     isSelfContained: false,
@@ -115,6 +115,14 @@ export const mockProperties: Property[] = [
     addedAt: "2023-10-25T16:20:00Z",
   }
 ];
+
+export function addMockProperty(property: Property) {
+  mockProperties = [property, ...mockProperties];
+}
+
+export function getMockProperties(): Property[] {
+  return mockProperties;
+}
 
 export async function getPropertyBySlug(slug: string): Promise<Property | null> {
   // Simulate network delay
