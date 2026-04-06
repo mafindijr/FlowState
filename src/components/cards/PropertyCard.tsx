@@ -18,8 +18,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const [isSaved, setIsSaved] = useState(false);
 
   const formattedPrice = property.listingType === "Rent"
-    ? `$${property.price.toLocaleString()}/mo`
-    : `$${property.price.toLocaleString()}`;
+    ? `₦${property.price.toLocaleString()}/mo`
+    : `₦${property.price.toLocaleString()}`;
 
   const getStatusLabel = () => {
     if (property.status === "Sold") return "Sold Out";

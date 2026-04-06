@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Building2, Save, Loader2, UploadCloud, CheckCircle2 } from "lucide-react";
+import { Building2, Save, Loader2, UploadCloud, CheckCircle2, ImagePlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createProperty } from "@/actions/property";
 
@@ -11,6 +11,51 @@ export default function AddPropertyPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [fileName, setFileName] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileSelect = useCallback((file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setErrorMsg("Please upload an image file (PNG, JPG, WEBP, etc.)");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMsg("Image must be less than 10MB");
+      return;
+    }
+    setErrorMsg("");
+    setFileName(file.name);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImagePreview(e.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) handleFileSelect(file);
+  }, [handleFileSelect]);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
+  const removeImage = () => {
+    setImagePreview(null);
+    setFileName("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,7 +73,7 @@ export default function AddPropertyPage() {
       beds: Number(formData.get("beds")),
       baths: Number(formData.get("baths")),
       sqft: Number(formData.get("sqft")),
-      imageUrl: formData.get("imageUrl") as string || "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+      imageUrl: imagePreview || "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
     };
 
     try {
@@ -101,14 +146,14 @@ export default function AddPropertyPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label htmlFor="price" className="text-sm font-semibold text-foreground">Price ($)</label>
+                <label htmlFor="price" className="text-sm font-semibold text-foreground">Price (₦)</label>
                 <input 
                   required 
                   type="number"
                   min="1"
                   id="price"
                   name="price" 
-                  placeholder="e.g. 2500000" 
+                  placeholder="e.g. 25000000" 
                   className="w-full flex h-12 rounded-xl border border-border bg-slate-50 px-4 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors"
                 />
               </div>
@@ -201,16 +246,100 @@ export default function AddPropertyPage() {
               </div>
             </div>
 
+            {/* Drag & Drop Image Upload */}
             <div className="space-y-2 mt-4">
-              <label htmlFor="imageUrl" className="text-sm font-semibold text-foreground">Feature Image URL</label>
-              <div className="flex gap-4">
-                <input 
-                  id="imageUrl"
-                  name="imageUrl" 
-                  placeholder="https://images.unsplash.com/photo-..." 
-                  className="w-full flex h-12 rounded-xl border border-border bg-white px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors"
-                />
-              </div>
+              <label className="text-sm font-semibold text-foreground">Feature Image</label>
+              
+              <input 
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                id="imageUpload"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleFileSelect(file);
+                }}
+              />
+
+              {imagePreview ? (
+                <div className="relative rounded-2xl overflow-hidden border-2 border-primary/20 bg-white group">
+                  <img 
+                    src={imagePreview} 
+                    alt="Preview" 
+                    className="w-full h-56 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-3">
+                      <Button 
+                        type="button"
+                        variant="secondary"
+                        size="sm"
+                        className="rounded-xl bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg font-semibold"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        <ImagePlus className="h-4 w-4 mr-2" />
+                        Replace
+                      </Button>
+                      <Button 
+                        type="button"
+                        variant="secondary"
+                        size="sm"
+                        className="rounded-xl bg-white/90 backdrop-blur-sm hover:bg-red-50 hover:text-red-600 shadow-lg font-semibold"
+                        onClick={removeImage}
+                      >
+                        <X className="h-4 w-4 mr-2" />
+                        Remove
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-2 shadow-sm">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    <span className="text-xs font-semibold text-foreground truncate max-w-[200px]">{fileName}</span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onClick={() => fileInputRef.current?.click()}
+                  className={`
+                    relative cursor-pointer rounded-2xl border-2 border-dashed transition-all duration-300 p-8
+                    flex flex-col items-center justify-center gap-4 min-h-[200px]
+                    ${isDragging 
+                      ? "border-primary bg-primary/5 scale-[1.02] shadow-lg" 
+                      : "border-border/60 bg-white hover:border-primary/40 hover:bg-primary/[0.02]"
+                    }
+                  `}
+                >
+                  <div className={`
+                    h-16 w-16 rounded-2xl flex items-center justify-center transition-all duration-300
+                    ${isDragging ? "bg-primary/15 scale-110" : "bg-slate-100"}
+                  `}>
+                    <UploadCloud className={`h-8 w-8 transition-colors duration-300 ${isDragging ? "text-primary" : "text-muted-foreground"}`} />
+                  </div>
+
+                  <div className="text-center space-y-1.5">
+                    <p className="text-sm font-semibold text-foreground">
+                      {isDragging ? "Drop your image here" : "Drag & drop your image here"}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      or <span className="text-primary font-semibold hover:underline">browse files</span> from your device
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-[10px] font-medium text-muted-foreground/60 uppercase tracking-wider">
+                    <span>PNG</span>
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+                    <span>JPG</span>
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+                    <span>WEBP</span>
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+                    <span>Max 10MB</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           

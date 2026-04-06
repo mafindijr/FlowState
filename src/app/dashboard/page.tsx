@@ -51,7 +51,7 @@ export default function DashboardOverview() {
           </div>
           <div>
             <p className="text-sm font-medium text-muted-foreground mb-1">Total Value</p>
-            <p className="text-3xl font-bold">${(totalValue / 1000000).toFixed(1)}M</p>
+            <p className="text-3xl font-bold">₦{(totalValue / 1000000).toFixed(1)}M</p>
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function DashboardOverview() {
                     </span>
                   </td>
                     <td className="p-4 font-medium text-sm">
-                       ${property.price.toLocaleString()}
+                       ₦{property.price.toLocaleString()}
                     </td>
                   </tr>
                 ))}

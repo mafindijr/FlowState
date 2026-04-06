@@ -32,8 +32,8 @@ export default async function PropertyDetailPage({ params }: PageProps) {
   }
 
   const formattedPrice = property.listingType === "Rent"
-    ? `$${property.price.toLocaleString()}/mo`
-    : `$${property.price.toLocaleString()}`;
+    ? `₦${property.price.toLocaleString()}/mo`
+    : `₦${property.price.toLocaleString()}`;
 
   return (
     <div className="flex-1 bg-white">

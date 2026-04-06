@@ -15,7 +15,7 @@ export const propertySchema = z.object({
   beds: z.number().nonnegative(),
   baths: z.number().nonnegative(),
   sqft: z.number().positive(),
-  imageUrl: z.string().url(),
+  imageUrl: z.string().min(1),
 });
 
 export async function createProperty(data: z.infer<typeof propertySchema>) {
