@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Building2, Menu } from "lucide-react";
+import Image from "next/image";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -10,11 +11,15 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-md">
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-foreground">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-              <Building2 className="h-5 w-5 text-white" />
-            </div>
-            FlowState
+          <Link href="/" className="flex items-center">
+            <Image 
+              src="/brand/flowstate-logo.png" 
+              alt="FlowState" 
+              width={160} 
+              height={40} 
+              className="h-9 w-auto object-contain" 
+              priority 
+            />
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link href="/explore" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">

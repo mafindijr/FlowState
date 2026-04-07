@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2 } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,11 +7,14 @@ export function Footer() {
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1 space-y-4">
-            <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-foreground">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <Building2 className="h-5 w-5 text-white" />
-              </div>
-              FlowState
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/brand/flowstate-logo.png" 
+                alt="FlowState" 
+                width={160} 
+                height={40} 
+                className="h-9 w-auto object-contain" 
+              />
             </Link>
             <p className="text-sm text-muted-foreground">
               The modern way to find your perfect home. Premium UI, seamless experience.
