@@ -10,8 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FlowState | The Premium Real Estate Discovery Platform",
+  title: "FlowState | The Premium Real Estate Inventory System",
   description: "Find your perfect home for rent or sale. High-end property discovery made simple.",
+  icons: {
+    icon: "/brand/flowstate-logo.png",
+    apple: "/brand/flowstate-logo.png",
+  },
 };
 
 export default function RootLayout({
