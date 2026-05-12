@@ -1,8 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlowState | Premium Real Estate Inventory System
+
+<p align="center">
+  <img src="https://placehold.co/800x400/0f172a/cbd5e1?text=FlowState+App+Screenshot" alt="FlowState Application Screenshot" />
+</p>
+
+**FlowState** is a modern, high-performance real estate platform designed for discovering, managing, and transacting premium properties. Built with cutting-edge web technologies, it delivers an intuitive experience for property seekers, agents, and real estate professionals.
+
+## Overview
+
+FlowState streamlines the property discovery process through verified listings, smart categorization, and seamless booking experiences. The platform currently specializes in Luxury, Residential, Self-contained, Commercial, and Land properties with both rental and sale options.
+
+## Features
+
+### For Property Seekers
+- **Smart Discovery**: Browse curated property collections with advanced filtering
+- **Verified Listings**: All properties undergo strict verification processes
+- **Instant Booking**: Schedule viewings and connect with agents seamlessly
+- **Property Details**: Comprehensive information including amenities, photos, and pricing
+
+### For Agents & Property Managers
+- **Dashboard Analytics**: Track property performance with real-time insights
+- **Lead Management**: Monitor inquiries and conversion metrics
+- **Property Management**: Add, edit, and manage property listings
+- **Performance Metrics**: View counts, engagement rates, and trending data
+
+### Key Capabilities
+- Property showcase with high-resolution imagery
+- Category-based exploration (Luxury, Rentals, Self-contained)
+- Interactive property detail pages with amenity listings
+- Responsive design optimized for all devices
+- Modern UI built with Tailwind CSS and Radix UI components
+
+## Tech Stack
+
+| Technology | Version |
+|------------|---------|
+| Next.js | 16.2.2 |
+| React | 19.2.4 |
+| TypeScript | ^5 |
+| Tailwind CSS | ^4 |
+| Zustand | ^5.0 |
+| React Query | ^5.96 |
+| Framer Motion | ^12.38 |
 
 ## Getting Started
-
-First, run the development server:
 
 ```bash
 npm run dev
@@ -10,27 +51,51 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── page.tsx              # Marketing landing page
+│   ├── explore/              # Property discovery pages
+│   │   ├── page.tsx          # Property grid listing
+│   │   └── [slug]/           # Dynamic property detail pages
+│   └── dashboard/            # Agent/admin dashboard
+│       ├── page.tsx          # Dashboard overview
+│       ├── add-property/     # Property creation form
+│       ├── leads/            # Lead management
+│       └── settings/         # Configuration settings
+├── components/
+│   ├── navigation/           # Navbar and Footer
+│   ├── explore/              # Property grid component
+│   └── ui/                   # Reusable UI components
+├── lib/
+│   ├── mock-data.ts          # Sample property data
+│   └── utils.ts              # Utility functions
+└── types/
+    └── index.ts              # TypeScript definitions
+```
 
-## Learn More
+## Future Features
 
-To learn more about Next.js, take a look at the following resources:
+### AI Integration
+- **Smart Property Recommendations**: AI-powered matching based on user preferences and behavior
+- **Automated Property Valuation**: Machine learning models for accurate property pricing
+- **Intelligent Chatbot**: 24/7 customer support with natural language processing
+- **Predictive Analytics**: Market trend forecasting and investment insights
+- **Virtual Staging**: AI-generated interior design visualization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Blockchain Integration
+- **Property Tokenization**: Fractional ownership through NFT-based property shares
+- **Smart Contracts**: Automated escrow and transaction processing
+- **Immutable Records**: Blockchain-based property history and verification
+- **Digital Deeds**: Secure, tamper-proof property ownership documentation
+- **Cryptocurrency Payments**: Support for crypto-based real estate transactions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is private and proprietary to FlowState.
