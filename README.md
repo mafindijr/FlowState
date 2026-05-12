@@ -1,8 +1,6 @@
 # FlowState | Premium Real Estate Inventory System
 
-<p align="center">
-  <img src="https://placehold.co/800x400/0f172a/cbd5e1?text=FlowState+App+Screenshot" alt="FlowState Application Screenshot" />
-</p>
+![FlowState Screenshot](public/screenshots/screenshot.png)
 
 **FlowState** is a modern, high-performance real estate platform designed for discovering, managing, and transacting premium properties. Built with cutting-edge web technologies, it delivers an intuitive experience for property seekers, agents, and real estate professionals.
 
