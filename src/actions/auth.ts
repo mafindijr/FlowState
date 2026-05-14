@@ -9,7 +9,7 @@ const loginSchema = z.object({
 });
 
 export async function loginUser(formData: FormData) {
-  
+
   // Simulate network
   await new Promise((resolve) => setTimeout(resolve, 800));
 
@@ -46,3 +46,4 @@ export async function checkAuth() {
   const token = cookieStore.get("auth_token");
   return !!token;
 }
+
